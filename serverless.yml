@@ -1,0 +1,21 @@
+# serverless.yml
+
+service: spacebiz-node
+
+provider:
+  name: aws
+  runtime: nodejs6.10
+  stage: dev
+  region: us-east-1
+
+functions:
+  app:
+    handler: node-backend-entrypoint-spacebiz.handler
+    events:
+      - http: ANY /
+      - http: 'ANY {proxy+}'
+
+      # Routing will be done in Express framework in the application, not here.
+
+plugins:
+    - serverless-offline

@@ -1,0 +1,26 @@
+{
+  "name": "spacebiz-node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "node-backend-entrypoint-spacebiz.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mdeselincourt/spacebiz-node.git"
+  },
+  "author": "Michael de Selincourt",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mdeselincourt/spacebiz-node/issues"
+  },
+  "homepage": "https://github.com/mdeselincourt/spacebiz-node#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "serverless-http": "^1.8.0"
+  },
+  "devDependencies": {
+    "serverless-offline": "^3.31.3"
+  }
+}
