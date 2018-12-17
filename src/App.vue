@@ -1,46 +1,52 @@
 <template>
-  <div id="app">
-    <header>
-      <span>Handling Ajax Request with Axios in Vue</span>
-    </header>
-    <main>
-      <h2>Click the button to get Random jokes</h2>
-      <button id="btn" class="" v-on:click="getJokes">Get Jokes</button>
+  		<div id="app">
 
-      <div v-if="loading">
-        <img src="../src/assets/loader.gif"/>
-          Loading.....
-      </div>
+        <!-- Topmost bar shows user state -->
+        <!--<spacebizuserbar></spacebizuserbar>-->
 
-      <div class="wrapper">
-        <div class="wrapper">
-          <div class="row">
-            <div v-for="joke in jokes" :key="joke.id">
-              <div class="col-md-4 cards">
-                <img src="https://placeimg.com/300/300/nature" class="img-responsive" alt="Random images placeholder"> 
-                <div>
-                  <h3>{{ joke.id }}</h3>
-                  <p>{{ joke.joke }}</p>
-                  <p>{{ joke.category }}</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </main>
-  </div>
+        <h1>Class Designer</h1>
+		    <p>
+          <label for="classname">Name:</label>
+          <input id="classname" v-model="classname" value="Formidable">
+          <input id="classrole" v-model="classrole" value="Frigate">		
+			  </p>
+		
+			<ul>
+				<li>Engines<input id="enginetonnage" v-model.number="enginetonnage" TYPE="NUMBER" MIN="50" MAX="1000" STEP="50" VALUE="250" SIZE="20"/></li>
+				<li>Power<input id="powertonnage" v-model.number="powertonnage" TYPE="NUMBER" MIN="50" MAX="1000" STEP="50" VALUE="500" SIZE="10"/></li>
+				<li>Command<input id="commandtonnage" v-model.number="commandtonnage" TYPE="NUMBER" MIN="50" MAX="1000" STEP="50" VALUE="250" SIZE="10"/></li>
+				<li>Habitation<input id="habitationtonnage" v-model.number="habitationtonnage" TYPE="NUMBER" MIN="50" MAX="1000" STEP="50" VALUE="750" SIZE="10"/></li>
+				<li>Fuel<input id="fueltonnage" v-model.number="fueltonnage" TYPE="NUMBER" MIN="50" MAX="1000" STEP="50" VALUE="250" SIZE="10"/></li>
+				<li>Ammunition<input id="ammunitiontonnage" v-model.number="ammunitiontonnage" TYPE="NUMBER" MIN="50" MAX="1000" STEP="50" VALUE="250" SIZE="10"/></li>
+				<li>Stores<input id="storestonnage" v-model.number="storestonnage" TYPE="NUMBER" MIN="50" MAX="1000" STEP="50" VALUE="250" SIZE="10"/></li>
+				<li>Weaponry<input id="weaponrytonnage" v-model.number="weaponrytonnage" TYPE="NUMBER" MIN="50" MAX="1000" STEP="50" VALUE="250" SIZE="10"/></li>
+			</ul>
+			
+			<p>{{ totaltonnage }} t</p>
+			
+			<p>
+				<input type="submit">  
+			</p> 
+		</div>
 </template>
 
 <script>
   import axios from 'axios';
   
-  export default {
+  export default { // Testing
     name: 'app',
     data () {
       return {
-        jokes: [],
-        loading: false
+        classname: "Formidable",
+        classrole: "Destroyer",
+        enginetonnage: 250,
+        powertonnage: 500,
+        commandtonnage: 250,
+        habitationtonnage: 750,
+        fueltonnage: 250,
+        ammunitiontonnage: 250,
+        storestonnage: 250,
+        weaponrytonnage: 250
       }
     }, 
     methods: {
@@ -58,34 +64,18 @@
             )
         }
     },
+    computed: {
+      totaltonnage() {
+        //return typeof this.enginetonnage;
+        return this.enginetonnage + this.powertonnage + this.commandtonnage + this.habitationtonnage + this.fueltonnage + this.ammunitiontonnage + this.storestonnage + this.weaponrytonnage;
+      }
+    }
   }
 </script>
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-
-h1, h2 {
-  font-weight: normal;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-
-a {
-  color: #42b983;
+  font-family: 'Avenir', Arial, Helvetica, sans-serif;
+  background: #eee;
 }
 </style>
