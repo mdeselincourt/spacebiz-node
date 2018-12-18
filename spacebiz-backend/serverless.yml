@@ -4,7 +4,6 @@
 #
 #    docs.serverless.com
 
-
 service: spacebiz-backend
 
 # You can pin your service to only deploy with a specific Serverless version
@@ -21,9 +20,9 @@ provider:
 
 functions:
   hello:
-    handler: handler.hello
+    handler: handler.worldstate
     events:
       - http: 
         # Need two indents apparently?!
-          path: hello
+          path: worldstate
           method: get
