@@ -1,16 +1,15 @@
 {
   "name": "spacebiz-backend",
   "version": "1.0.0",
-  "description": "",
-  "main": "spacebiz-backend.js",
-  "dependencies": {
-    "express": "^4.16.4",
-    "serverless-http": "^1.8.0"
-  },
-  "devDependencies": {},
+  "description": "Backend of Spacebiz",
+  "main": "handler.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "M de Selincourt",
-  "license": "UNLICENSED"
+  "author": "MdS",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "express": "^4.16.4",
+    "serverless-http": "^1.8.0"
+  }
 }
