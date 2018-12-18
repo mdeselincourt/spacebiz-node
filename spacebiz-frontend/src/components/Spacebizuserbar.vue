@@ -5,7 +5,8 @@
 </template>
 
 <script>
-    module.exports = {
+    //module.exports = {
+    export default {
         data: function() {
             return {
                 username: 'Brapp Zannigan'
