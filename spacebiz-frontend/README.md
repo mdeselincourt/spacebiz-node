@@ -1,5 +1,9 @@
 # spacebiz-frontend
 
+My frontend uses the Vue.js framework, and is compiled for distribution by (npm's) vue-cli-service (see package.json)
+
+I test the built app independently of the vue tools with (npm's) serve.
+
 ## Project setup
 ```
 npm install
