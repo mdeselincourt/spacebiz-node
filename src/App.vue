@@ -1,7 +1,12 @@
 <template>
-  		<div id="app">
-        <Spacebizuserbar></Spacebizuserbar><!-- SFC, needs import and component: below-->
-        <Classdesigner></Classdesigner>
+  	<div id="app">
+      <Spacebizuserbar></Spacebizuserbar><!-- SFC, needs import and component: below-->
+      <News v-bind:worldstate = "worldstate"></News> <!-- pass entire world state object to the news component -->
+      <Classdesigner></Classdesigner>
+
+      <!-- non-componentised root component debugging output -->
+      <h1>World state:</h1> 
+      {{ worldstate }}
 		</div>
 </template>
 
@@ -12,15 +17,30 @@
   // Import vue SFCs
   import Spacebizuserbar from './Spacebizuserbar.vue'
   import Classdesigner from './Classdesigner.vue' 
+  import News from './News.vue'
 
   // Configure this SFC
   export default {
     name: 'app',
     components: {
-      Spacebizuserbar, Classdesigner
+      Spacebizuserbar, Classdesigner, News
     },
     data () {
-      return {}
+      return {
+        worldstate: {
+          news: [
+            {
+              id: 0,
+              type: "tender",
+              client: "United Stars",
+              budget: 3000,
+              targetTonnage: 2750,
+              quantity: 1,
+              role: "Multi-role"
+            }
+          ]
+        }
+      }
     }, 
     methods: {
       //getJokes: function () 
@@ -44,6 +64,6 @@
 <style>
 #app {
   font-family: 'Avenir', Arial, Helvetica, sans-serif;
-  background: rgb(77, 0, 77);
+  background: #fee;
 }
 </style>

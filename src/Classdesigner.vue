@@ -18,10 +18,13 @@
 				<li><input id="weaponrytonnage" v-model.number="weaponrytonnage" TYPE="NUMBER" MIN="50" MAX="1000" STEP="50" VALUE="250" SIZE="10"/> t Weaponry</li>
 			</ul>
 			
-			<p>Total tonnage: {{ totaltonnage }} t</p>
-			<p>Length: {{ length }} m</p>
-
 			<p>
+                <ul>
+                    <li>Total tonnage: {{ totaltonnage }} t</li>
+                    <li>Length: {{ length }} m</li>
+                    <li>Crew: {{ crew }}</li>
+                    <li>of which Officers: {{ officers }}</li>
+                </ul>
 				<input type="submit">  
 			</p> 
 		</div>
@@ -63,20 +66,40 @@
             )
         }
     },
+
+    // A 70s Frigate masses about 2750
+    // Destroyer 3500
+    // C-Class Town light cruiser 11,500 (erm)
+    // York heavy cruiser 8,250 (ermm?!)
+    // Sejong the Great modern destroyer 8,500
+    // 15,000 largest modern warship (technically a destroyer)
+    // The Yamato 72,800
+    // 100k Nimitz
+
     computed: {
       totaltonnage() {
         //return typeof this.enginetonnage;
         return this.enginetonnage + this.powertonnage + this.commandtonnage + this.habitationtonnage + this.fueltonnage + this.ammunitiontonnage + this.storestonnage + this.weaponrytonnage;
       },
       length() {
-          return (this.enginetonnage + this.powertonnage + this.commandtonnage + this.habitationtonnage + this.fueltonnage + this.ammunitiontonnage + this.storestonnage + this.weaponrytonnage) * (110/2750);
+          return Math.round((this.enginetonnage + this.powertonnage + this.commandtonnage + this.habitationtonnage + this.fueltonnage + this.ammunitiontonnage + this.storestonnage + this.weaponrytonnage) 
+          * (110/2750));
+      },
+      crew() {
+          return Math.round((this.enginetonnage + this.powertonnage + this.commandtonnage + this.habitationtonnage + this.fueltonnage + this.ammunitiontonnage + this.storestonnage + this.weaponrytonnage) 
+          * (177/2750))
+      },
+      officers()
+      {
+          return Math.round((this.enginetonnage + this.powertonnage + this.commandtonnage + this.habitationtonnage + this.fueltonnage + this.ammunitiontonnage + this.storestonnage + this.weaponrytonnage) 
+          * (177/2750) * (0.075))
       }
     }
   }
 </script>
 
 <style>
-#app {
+#classdesigner {
   font-family: 'Avenir', Arial, Helvetica, sans-serif;
   background: #eee;
 }

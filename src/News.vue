@@ -1,21 +1,21 @@
 <template>
-    <div id="spacebizuserbar">
-       <p>You are: {{ username }}</p>
+    <div id="news">
+       <h1>News</h1>
+       {{ worldstate.news }}
     </div>
 </template>
 
 <script>
     module.exports = {
         data: function() {
-            return {
-                username: 'Brapp Zannigan'
-            }
-        }
+            return { }
+        },
+        props: ['worldstate'] // Accept the entire world state from the app root in one object lump
     }
 </script>
 
 <style scoped>
-#spacebizuserbar {
-    background: #eef;
+#news {
+    background: #efe;
 }
 </style>
