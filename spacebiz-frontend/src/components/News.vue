@@ -17,6 +17,6 @@
 
 <style scoped>
 #news {
-    background: #efe;
+    background: #fee;
 }
 </style>

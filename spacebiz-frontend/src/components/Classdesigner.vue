@@ -102,8 +102,7 @@
 
 <style>
 #classdesigner {
-	font-family: 'Avenir', Arial, Helvetica, sans-serif;
-	background: #eee;
+	background: #eef;
 }
 
 input[type=number] {
