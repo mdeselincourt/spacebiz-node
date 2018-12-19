@@ -19,11 +19,11 @@ provider:
   region: us-east-1
 
 functions:
-  hello:
-    handler: handler.worldstate
+  worldstate: # 1: FUNCTION NAME
+    handler: handler.worldstate # 2: CODE HOOK FOR FUNCTION IN THE JS
     events:
       - http: 
         # Need two indents apparently?!
-          path: worldstate
+          path: worldstate #3:  EXPOSED API PATH
           method: get
           cors: true # <-- to permit access from a frontend on another domain

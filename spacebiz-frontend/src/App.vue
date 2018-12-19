@@ -4,7 +4,7 @@
 			<News v-bind:worldstate = "worldstate"></News> <!-- pass entire world state object to the news component -->
 			<Classdesigner></Classdesigner>
 
-			<!-- non-componentised root component debugging output -->
+			<!-- non-componentised root component debugging output  -->
 			<h1>World state:</h1> 
 			{{ worldstate }}
 		</div>
@@ -28,42 +28,38 @@
 		},
 		data () { // Yes this is right despite it not saying data:
 			
-			// Get the data object from the Extension
+			// return {
+			// 	worldstate: {
+			// 		news: [
+			// 			{
+			// 				id: 0,
+			// 				type: "App.vue",
+			// 				client: "App.vue",
+			// 				budget: 1,
+			// 				targetTonnage: 1,
+			// 				quantity: 1,
+			// 				role: "App.vue"
+			// 			}
+			// 		]
+			// 	}
+			// }
 
-			// I don't yet understand EC6 "async function" so I'll attempt without
-
-			
-			axios.get('https://m1c6e25h0l.execute-api.us-east-1.amazonaws.com/dev/worldstate')
-			.then(function (response) {
-				return response;
-				})
-			.catch(function (error) {
-				throw new Error(error)
-			});
-			
-			
-			// return the expected worldstate element
-			/**
-			return {
-				worldstate: {
-					news: [
-						{
-							id: 0,
-							type: "tender",
-							client: "United Stars",
-							budget: 3000,
-							targetTonnage: 2750,
-							quantity: 1,
-							role: "Multi-role"
-						}
-					]
-				}
-			} */
-			
-			
+			return { worldstate: "" } // When the frontend page first loads, worldstate is unknown
 			
 		}, 
+		mounted() { // "Called afer the instance has been mounted" which appears to mean ready for update events
+
+			// I don't yet understand EC6 "async function" so I'll attempt without:
+			// Get an API and then when it replies put the whole response into vue data name "info"
+			axios
+			.get('https://m1c6e25h0l.execute-api.us-east-1.amazonaws.com/dev/worldstate')
+			.then(response => (this.worldstate = response.data))
+			//.catch(...
+		},
 		methods: {
+			
+			// Example function
+			
 			//getJokes: function () 
 			//  {
 			//    this.loading = true;

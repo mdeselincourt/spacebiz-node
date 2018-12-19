@@ -4,7 +4,6 @@ module.exports.worldstate = async (event, context) => {
   
   // I choose to define body here for clarity
   var body = {
-    worldstate: {
       news: [
         {
           id: 0,
@@ -16,11 +15,15 @@ module.exports.worldstate = async (event, context) => {
           role: "Multi-role"
         }
       ]
-    }
   };
   
   return {
     statusCode: 200,
+    headers: {
+      // Permit access from a frontend on a different domain
+      'Access-Control-Allow-Origin': '*' // This should be tightened really
+      // 'Access-Control-Allow-Credentials': true
+    },
     body: JSON.stringify(body)
   };
 
