@@ -26,3 +26,4 @@ functions:
         # Need two indents apparently?!
           path: worldstate
           method: get
+          cors: true # <-- to permit access from a frontend on another domain
