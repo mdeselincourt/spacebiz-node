@@ -29,12 +29,35 @@ export default class Spacebiz {
     //}
 }
 
+export class Division {
+    constructor (tonnage,brandname,reliability,value) {
+        this.tonnage = tonnage,
+        this.brandname = brandname,
+        this.reliability = reliability,
+        this.value = value
+    }
+}
+
 export class ShipClass {
 
     constructor () {
-        
         this.name = "Formidable",
-        this.enginetonnage =  250,
+        this.role = "Frigate";
+        // 
+        
+        this.divisions = {
+            engines: new Division(252, "AMEC", 1, 250),
+            power: new Division(250, "AMEC", 1, 250),
+            command: new Division(250, "AMEC", 1, 250),
+            habitation: new Division(750, "AMEC", 1, 250),
+            fuel: new Division(250, "AMEC", 1, 250),
+            ammunition: new Division(250, "AMEC", 1, 250),
+            stores: new Division(250, "AMEC", 1, 250),
+            weaponry: new Division(250, "AMEC", 1, 250)
+        }
+       
+        // OLDER IMPLEMENTATION FOR RETIREMENT
+        this.enginetonnage =  251,
         this.powertonnage =  500,
         this.commandtonnage =  250,
         this.habitationtonnage =  750,
@@ -42,23 +65,71 @@ export class ShipClass {
         this.ammunitiontonnage =  250,
         this.storestonnage =  250,
         this.weaponrytonnage =  250
+        // tonnage (total)
+            // role (derived from tonnage)
+            // length (derived from tonnage)
+            // complement
+                // officers
+                // coof (CO's OF-)
+        
     }
 
     get tonnage() {
-        return this.enginetonnage + this.powertonnage + this.commandtonnage + this.habitationtonnage + this.fueltonnage + this.ammunitiontonnage + this.storestonnage + this.weaponrytonnage;
+        
+        var t = 0;
+
+        // This works
+        // for (var divisionKey of Object.keys(this.divisions)){
+        //     t += this.divisions[divisionKey].tonnage;
+        // }
+
+        for (var divisionKey in this.divisions){
+            t += this.divisions[divisionKey].tonnage;
+        }
+
+        // for (var division in this.divisions){
+        //     t += division.tonnage;
+        // }
+
+        return t;
+        
+        // OLD implementation
+        // return Math.round(this.enginetonnage + this.powertonnage + this.commandtonnage + this.habitationtonnage + this.fueltonnage + this.ammunitiontonnage + this.storestonnage + this.weaponrytonnage);
     } 
 
-    get role() {
+    reevaluaterole() {
         
-        if (this.tonnage < 1350) { return "Corvette"; }
-        else if (this.tonnage < 2500) { return "Frigate"; }
-        else if (this.tonnage < 8000) { return "Destroyer"; }
-        else if (this.tonnage < 12000) { return "Cruiser"; }
-        else { return "Capital"; }
+        // I don't know a better way to update the data from other reactive changes without causing a stack overflow.
+        if (this.tonnage < 1350) { this.role = "Corvette"; }
+        else if (this.tonnage < 2500) { this.role = "Frigate"; }
+        else if (this.tonnage < 8000) { this.role = "Destroyer"; }
+        else if (this.tonnage < 12000) { this.role = "Cruiser"; }
+        else { this.role = "Battleship"; }
         
     }
 
-    static calculateLength(tonnage) {
-        return Math.round(10 * (tonnage ^ 0.33));
+    // set role(r) { // Role is manually editable with machine suggestions
+    //     this._role = r; // erm...
+    // }
+
+    get length() {
+        return Math.round(10 * Math.pow(this.tonnage, 0.33));
     }
+
+    get complement() {
+        return Math.round(0.5 * Math.pow(this.tonnage, 0.8))
+    }
+
+    get officers() {
+        return Math.round(this.complement/20 + 3)
+    }
+
+    get coof() {
+        return Math.round(Math.pow(this.complement,0.23))
+    }
+
+    // If code must be shared but DOESN'T act on the instance you can do this
+    //static calculateLength(t) {
+    //    return Math.round(10 * (Math.pow(t, 0.33)));
+    //}
 }

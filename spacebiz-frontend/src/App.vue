@@ -12,7 +12,7 @@
 
 <script>
 	// Import libraries
-	import axios from 'axios'; // For HTTP!
+	// import axios from 'axios'; // For HTTP!
 		// No don't use require('') that's native nodeJS, Vue doesn't like it
 
 	// Import vue SFCs
@@ -51,10 +51,14 @@
 
 			// I don't yet understand EC6 "async function" so I'll attempt without:
 			// Get an API and then when it replies put the whole response into vue data name "info"
-			axios
-			.get('https://m1c6e25h0l.execute-api.us-east-1.amazonaws.com/dev/worldstate')
-			.then(response => (this.worldstate = response.data))
-			//.catch(...
+			
+			// axios
+			// .get('https://m1c6e25h0l.execute-api.us-east-1.amazonaws.com/dev/worldstate')
+			// .then(response => (this.worldstate = response.data))
+
+			
+			this.worldstate = {news: [ { "id": 0, "type": "STATIC DUMMY API RESPONSE", "client": "United Stars", "budget": 3000, "targetTonnage": 2750, "quantity": 1, "role": "Multi-role" } ]};
+			
 		},
 		methods: {
 			

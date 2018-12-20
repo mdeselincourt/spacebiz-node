@@ -6,10 +6,34 @@
 				<label for="classname">Name:</label>
 				<input id="classname" v-model="shipclass.name" value=""/>
 				<input id="classrole" v-model="shipclass.role" value=""/>		
-				<input id="totaltonnagedebug" v-model="totaltonnage"/>
 			</p>
 	
 			<ul>
+				<!-- As of writing I don't know a better way to update a model element that is ALSO reactive. (shipclass) is necessary to reference the instance for some reason -->
+				<li><input id="enginetonnage" v-model.number="shipclass.divisions.engines.tonnage" v-on:change="shipclass.reevaluaterole(shipclass)" TYPE="NUMBER" MIN="50" MAX="10000" STEP="50" SIZE="20"/>
+					t Engines 
+					<select v-model="shipclass.divisions.engines.brandname"> <!-- data entity to be maninipulated -->
+						<option v-for="brand in facts.brands" v-bind:key="brand" v-bind:value="brand"> <!-- bind value to the x in y not to the data model -->
+							<!-- v-bind:key for the official value and v-bind:value for the displayed value -->
+							{{ brand }}
+						</option>
+					</select>
+				</li>
+				<li><input id="powertonnage" v-model.number="shipclass.divisions.power.tonnage" v-on:change="shipclass.reevaluaterole(shipclass)" TYPE="NUMBER" MIN="50" MAX="10000" STEP="50" SIZE="10"/>
+				t Power</li>
+				<li><input id="commandtonnage" v-model.number="shipclass.divisions.command.tonnage" v-on:change="shipclass.reevaluaterole(shipclass)" TYPE="NUMBER" MIN="50" MAX="10000" STEP="50" SIZE="10"/>
+				t Command</li>
+				<li><input id="habitationtonnage" v-model.number="shipclass.divisions.habitation.tonnage" v-on:change="shipclass.reevaluaterole(shipclass)" TYPE="NUMBER" MIN="50" MAX="10000" STEP="50" SIZE="10"/>
+				t Habitation</li>
+				<li><input id="fueltonnage" v-model.number="shipclass.divisions.fuel.tonnage" v-on:change="shipclass.reevaluaterole(shipclass)" TYPE="NUMBER" MIN="50" MAX="10000" STEP="50" SIZE="10"/> 
+				t Fuel</li>
+				<li><input id="ammunitiontonnage" v-model.number="shipclass.divisions.ammunition.tonnage" v-on:change="shipclass.reevaluaterole(shipclass)" TYPE="NUMBER" MIN="50" MAX="10000" STEP="50" SIZE="10"/>
+				t Ammunition</li>
+				<li><input id="storestonnage" v-model.number="shipclass.divisions.stores.tonnage" v-on:change="shipclass.reevaluaterole(shipclass)" TYPE="NUMBER" MIN="50" MAX="10000" STEP="50" SIZE="10"/>
+				t Stores</li>
+				<li><input id="weaponrytonnage" v-model.number="shipclass.divisions.weaponry.tonnage" v-on:change="shipclass.reevaluaterole(shipclass)" TYPE="NUMBER" MIN="50" MAX="10000" STEP="50" SIZE="10"/>
+				t Weaponry</li>
+				<!-- pre Divisions 
 				<li><input id="enginetonnage" v-model.number="shipclass.enginetonnage" TYPE="NUMBER" MIN="50" MAX="10000" STEP="50" SIZE="20"/> t Engines</li>
 				<li><input id="powertonnage" v-model.number="shipclass.powertonnage" TYPE="NUMBER" MIN="50" MAX="10000" STEP="50" SIZE="10"/> t Power</li>
 				<li><input id="commandtonnage" v-model.number="shipclass.commandtonnage" TYPE="NUMBER" MIN="50" MAX="10000" STEP="50" SIZE="10"/> t Command</li>
@@ -18,13 +42,15 @@
 				<li><input id="ammunitiontonnage" v-model.number="shipclass.ammunitiontonnage" TYPE="NUMBER" MIN="50" MAX="10000" STEP="50" SIZE="10"/> t Ammunition</li>
 				<li><input id="storestonnage" v-model.number="shipclass.storestonnage" TYPE="NUMBER" MIN="50" MAX="10000" STEP="50" SIZE="10"/> t Stores</li>
 				<li><input id="weaponrytonnage" v-model.number="shipclass.weaponrytonnage" TYPE="NUMBER" MIN="50" MAX="10000" STEP="50" SIZE="10"/> t Weaponry</li>
+				-->
 			</ul>
 		
 			<ul>
-					<li>Total tonnage: {{ totaltonnage }} t</li>
-					<li>Length: {{ length }} m</li>
-					<li>Crew: {{ crew }}</li>
-					<li>of which Officers: {{ officers }}</li>
+					<li>Total tonnage: {{ shipclass.tonnage }} t</li>
+					<li>Length: {{ shipclass.length }} m</li>
+					<li>Crew: {{ shipclass.complement }}</li>
+					<li>of which Officers: {{ shipclass.officers }}</li>
+					<li>CO: OF-{{ shipclass.coof }}</li>
 
 			</ul>
 			<input type="submit"/>  
@@ -45,7 +71,12 @@
 		name: 'classdesigner',
 		data () { 
 
-			return { shipclass: new ShipClass() };
+			return { 
+				shipclass: new ShipClass(),
+				facts: {
+					brands: ["AMEC", "Primarch", "YORK", "Majeure", "Knowles Boyce"]
+				}
+			};
 			
 			//{ // Since the returned object is anonymous I think it's best always to have named entities inside it
 				
@@ -77,56 +108,7 @@
 			}
 		},
 		computed: {
-			totaltonnage() {
 			
-				// A Flower corvette is maybe 1000 t
-				// River-class frigate from 1370
-				// Tacoma WW2 Frigate from 1500t
-				// OP class 1650 t
-				// 40s JKN, QR, WZ, C, ST, UK class destroyer 1700        
-				// 40s Tribal 1850 t
-				// M class 1920 t
-				// Weapon class destroyer 2000t
-				// Battle class destroyer 2500t
-				// A 70s FRIGATE masses about 2750 
-				// Daring class destroyer 2800 t
-				// 70s? Destroyer 3500
-				// 40s Dido class cruiser 5800 t !
-				// 60s County class new-gen missile destroyer 6200 t !
-				// Future F125 FRIGATE 7200 t
-				// 80s Arleigh Burke destroyer 8000t 
-				// York heavy cruiser 8,250 (ermm?!)
-				// Sejong the Great large modern destroyer 8,500
-				// C-Class Town and the Tiger class (last gun Cruiser) 11,500
-				// USS Langley (CV-1) 12,700 t
-				// Modern Zumwalt-class 15,000 farcical US missile destroyer
-				// Yorktown-class CV 20000 t		
-				// The Yamato 72,800
-				// 100k Nimitz
-				//return typeof this.enginetonnage;
-			
-				// ATTEMPTING TO OUTFACTOR TO A MODULE
-				//return this.shipclass.enginetonnage + this.shipclass.powertonnage + this.shipclass.commandtonnage + this.shipclass.habitationtonnage + this.shipclass.fueltonnage + this.shipclass.ammunitiontonnage + this.shipclass.storestonnage + this.shipclass.weaponrytonnage;
-
-				// NO YOU MAY NOT HAVE SIDE EFFECTS IN YOUR COMPUTED FUNCTIONS that's naughty and Lint will complain.
-				//var tonnage = this.shipclass.enginetonnage + this.shipclass.powertonnage + this.shipclass.commandtonnage + this.shipclass.habitationtonnage + this.shipclass.fueltonnage + this.shipclass.ammunitiontonnage + this.shipclass.storestonnage + this.shipclass.weaponrytonnage; 
-
-				//return this.shipclass.tonnage; // works if module is an object with methods
-				return this.shipclass.tonnage;
-			},
-			length() {
-					return Math.round((this.shipclass.enginetonnage + this.shipclass.powertonnage + this.shipclass.commandtonnage + this.shipclass.habitationtonnage + this.shipclass.fueltonnage + this.shipclass.ammunitiontonnage + this.shipclass.storestonnage + this.shipclass.weaponrytonnage) 
-					* (110/2750));
-			},
-			crew() {
-					return Math.round((this.shipclass.enginetonnage + this.shipclass.powertonnage + this.shipclass.commandtonnage + this.shipclass.habitationtonnage + this.shipclass.fueltonnage + this.shipclass.ammunitiontonnage + this.shipclass.storestonnage + this.shipclass.weaponrytonnage) 
-					* (177/2750))
-			},
-			officers()
-			{
-					return Math.round((this.shipclass.enginetonnage + this.shipclass.powertonnage + this.shipclass.commandtonnage + this.shipclass.habitationtonnage + this.shipclass.fueltonnage + this.shipclass.ammunitiontonnage + this.shipclass.storestonnage + this.shipclass.weaponrytonnage) 
-					* (177/2750) * (0.075))
-			}
 		}
 	}
 </script>
