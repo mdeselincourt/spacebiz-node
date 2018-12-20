@@ -80,7 +80,7 @@
 			</pre></p>
 
 			<p>
-				<input type="submit" value="Commission design"/> Design cost: Ⴥ{{ shipclass.value / 10 }}
+				<input class="buttonClass" type="submit" :value="'Commission design for Ⴥ' + (shipclass.value / 10)"/><!-- gotta use :k="'java' + 'script'" format for attribute templates -->
 			</p>  
 		</form>
 

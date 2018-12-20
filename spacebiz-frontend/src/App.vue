@@ -98,9 +98,34 @@
 		font-family: "Rajdhani", Calibri, sens-serif;
 	}
 
+	.buttonClass {
+		background-color: green; /* Green */
+		color: white;
+
+		border: black;
+		border-style: solid;
+		border-width: 4px;
+		border-radius: 5px;
+		
+		padding: 16px 32px;
+		text-align: center;
+		text-decoration: none;
+		display: inline-block;
+		font-size: 16px;
+		margin: 4px 2px;
+		-webkit-transition-duration: 0.4s; /* Safari */
+		transition-duration: 0.4s;
+		cursor: pointer;
+	}
+
+.buttonClass:hover {
+  background-color: palegreen;
+  color: black;
+}
+
 	.asciiart {
 		background: black;
-		color: grey;
+		color: slategray;
 		font-family: 'Courier New', Courier, monospace;
 	}
 </style>
