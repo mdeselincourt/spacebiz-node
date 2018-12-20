@@ -98,4 +98,9 @@
 		font-family: "Rajdhani", Calibri, sens-serif;
 	}
 
+	.asciiart {
+		background: black;
+		color: grey;
+		font-family: 'Courier New', Courier, monospace;
+	}
 </style>

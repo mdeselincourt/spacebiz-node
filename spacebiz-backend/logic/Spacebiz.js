@@ -41,57 +41,77 @@ export class Division {
 export class ShipClass {
 
     constructor () {
-        this.name = "Formidable",
-        this.role = "Frigate";
+        this.name = "Battle";
+        this.role = "";
         // 
         
-        this.divisions = {
-            engines: new Division(252, "AMEC", 1, 250),
-            power: new Division(250, "AMEC", 1, 250),
-            command: new Division(250, "AMEC", 1, 250),
-            habitation: new Division(750, "AMEC", 1, 250),
-            fuel: new Division(250, "AMEC", 1, 250),
-            ammunition: new Division(250, "AMEC", 1, 250),
-            stores: new Division(250, "AMEC", 1, 250),
-            weaponry: new Division(250, "AMEC", 1, 250)
+
+        var constructorDivisionTypes = ["engines", "e-warfare", "sensors", "weaponry"];
+
+        this.divisions = {}
+
+        // Autoloading 
+        for (var newDiv of constructorDivisionTypes) {
+            this.divisions[newDiv] = new Division(250, "AMEC", 1.0, 250);
         }
+
+        // this.divisions = {
+        //     engines: new Division(252, "AMEC", 1, 250),
+        //     power: new Division(250, "AMEC", 1, 250),
+        //     command: new Division(250, "AMEC", 1, 250),
+        //     habitation: new Division(750, "AMEC", 1, 250),
+        //     fuel: new Division(250, "AMEC", 1, 250),
+        //     ammunition: new Division(250, "AMEC", 1, 250),
+        //     stores: new Division(250, "AMEC", 1, 250),
+        //     weaponry: new Division(250, "AMEC", 1, 250)
+        // };
        
         // OLDER IMPLEMENTATION FOR RETIREMENT
-        this.enginetonnage =  251,
-        this.powertonnage =  500,
-        this.commandtonnage =  250,
-        this.habitationtonnage =  750,
-        this.fueltonnage =  250,
-        this.ammunitiontonnage =  250,
-        this.storestonnage =  250,
-        this.weaponrytonnage =  250
+        // this.enginetonnage =  251,
+        // this.powertonnage =  500,
+        // this.commandtonnage =  250,
+        // this.habitationtonnage =  750,
+        // this.fueltonnage =  250,
+        // this.ammunitiontonnage =  250,
+        // this.storestonnage =  250,
+        // this.weaponrytonnage =  250
         // tonnage (total)
-            // role (derived from tonnage)
-            // length (derived from tonnage)
-            // complement
-                // officers
-                // coof (CO's OF-)
+        // role (derived from tonnage)
+        // length (derived from tonnage)
+        // complement
+        // officers
+        // coof (CO's OF-)
         
+        // Update anything that has intentionally been left needing active updates
+        this.reevaluaterole();
+    }
+
+    get value() {
+        var x = 0;
+        for (var divisionKey of Object.keys(this.divisions)){
+            x += this.divisions[divisionKey].value;
+        }
+        return x;
     }
 
     get tonnage() {
         
-        var t = 0;
+        var x = 0;
 
         // This works
-        // for (var divisionKey of Object.keys(this.divisions)){
+        for (var divisionKey of Object.keys(this.divisions)){
+            x += this.divisions[divisionKey].tonnage;
+        }
+
+        // for (var divisionKey in this.divisions){
         //     t += this.divisions[divisionKey].tonnage;
         // }
-
-        for (var divisionKey in this.divisions){
-            t += this.divisions[divisionKey].tonnage;
-        }
 
         // for (var division in this.divisions){
         //     t += division.tonnage;
         // }
 
-        return t;
+        return x;
         
         // OLD implementation
         // return Math.round(this.enginetonnage + this.powertonnage + this.commandtonnage + this.habitationtonnage + this.fueltonnage + this.ammunitiontonnage + this.storestonnage + this.weaponrytonnage);
@@ -102,7 +122,7 @@ export class ShipClass {
         // I don't know a better way to update the data from other reactive changes without causing a stack overflow.
         if (this.tonnage < 1350) { this.role = "Corvette"; }
         else if (this.tonnage < 2500) { this.role = "Frigate"; }
-        else if (this.tonnage < 8000) { this.role = "Destroyer"; }
+        else if (this.tonnage < 7000) { this.role = "Destroyer"; }
         else if (this.tonnage < 12000) { this.role = "Cruiser"; }
         else { this.role = "Battleship"; }
         
@@ -126,6 +146,29 @@ export class ShipClass {
 
     get coof() {
         return Math.round(Math.pow(this.complement,0.23))
+    }
+
+    get co() {
+        return ["Cadet", "Sub-lieutenant", "Lieutenant", "Lieutenant commander", "Commander", "Captain", "Commodore", "Rear admiral"][this.coof];
+    }
+
+    get asciiArt() {
+
+        var rows  = [];
+        rows[0] = " /█";
+        rows[1] = " L█";
+
+        var l = Math.min(Math.max(this.length, 50),400); 
+
+        for (var i = Math.round(l - 40) / 10; i > 0; i--) {
+            rows[0] += "█";
+            rows[1] += "█";
+        }
+
+        rows[0] += "█< =-";
+        rows[1] += "█< =-";
+
+        return rows[0] + "\n" + rows[1];
     }
 
     // If code must be shared but DOESN'T act on the instance you can do this

@@ -8,13 +8,29 @@
 				<input id="classrole" v-model="shipclass.role" value=""/>		
 			</p>
 	
-			<ul>
-				<!-- As of writing I don't know a better way to update a model element that is ALSO reactive. (shipclass) is necessary to reference the instance for some reason -->
+			<p>
+				<ul>
+					<li v-for="(d, dname) in shipclass.divisions" v-bind:key="dname"><!-- for each division make a point -->
+						<!-- using the :attr="datum" Vue syntax here -->
+						<input :id="dname" v-model.number="d.tonnage" v-on:input="shipclass.reevaluaterole()" TYPE="NUMBER" MIN="50" MAX="20000" STEP="50" SIZE="20"/><!-- tonnage input-->
+						t {{ dname }} <!-- tonnage input suffix --> 
+						<select :v-model="d.brandname"><!-- selector for brandname -->
+							<option v-for="brand in facts.brands" v-bind:key="brand" v-bind:value="brand">{{ brand }}</option> <!-- list all the facts.brands as options -->
+						</select>
+					</li>
+				</ul>
+			</p>
+
+			
+			<!-- As of writing I don't know a better way to update a model element that is ALSO reactive. (shipclass) is necessary to reference the instance for some reason -->
+			<!--
+			<ul>	
+				
 				<li><input id="enginetonnage" v-model.number="shipclass.divisions.engines.tonnage" v-on:change="shipclass.reevaluaterole(shipclass)" TYPE="NUMBER" MIN="50" MAX="10000" STEP="50" SIZE="20"/>
 					t Engines 
-					<select v-model="shipclass.divisions.engines.brandname"> <!-- data entity to be maninipulated -->
-						<option v-for="brand in facts.brands" v-bind:key="brand" v-bind:value="brand"> <!-- bind value to the x in y not to the data model -->
-							<!-- v-bind:key for the official value and v-bind:value for the displayed value -->
+					<select v-model="shipclass.divisions.engines.brandname">
+						<option v-for="brand in facts.brands" v-bind:key="brand" v-bind:value="brand"> 
+							
 							{{ brand }}
 						</option>
 					</select>
@@ -33,6 +49,8 @@
 				t Stores</li>
 				<li><input id="weaponrytonnage" v-model.number="shipclass.divisions.weaponry.tonnage" v-on:change="shipclass.reevaluaterole(shipclass)" TYPE="NUMBER" MIN="50" MAX="10000" STEP="50" SIZE="10"/>
 				t Weaponry</li>
+				-->
+
 				<!-- pre Divisions 
 				<li><input id="enginetonnage" v-model.number="shipclass.enginetonnage" TYPE="NUMBER" MIN="50" MAX="10000" STEP="50" SIZE="20"/> t Engines</li>
 				<li><input id="powertonnage" v-model.number="shipclass.powertonnage" TYPE="NUMBER" MIN="50" MAX="10000" STEP="50" SIZE="10"/> t Power</li>
@@ -42,19 +60,30 @@
 				<li><input id="ammunitiontonnage" v-model.number="shipclass.ammunitiontonnage" TYPE="NUMBER" MIN="50" MAX="10000" STEP="50" SIZE="10"/> t Ammunition</li>
 				<li><input id="storestonnage" v-model.number="shipclass.storestonnage" TYPE="NUMBER" MIN="50" MAX="10000" STEP="50" SIZE="10"/> t Stores</li>
 				<li><input id="weaponrytonnage" v-model.number="shipclass.weaponrytonnage" TYPE="NUMBER" MIN="50" MAX="10000" STEP="50" SIZE="10"/> t Weaponry</li>
-				-->
 			</ul>
-		
+			-->
+
 			<ul>
 					<li>Total tonnage: {{ shipclass.tonnage }} t</li>
 					<li>Length: {{ shipclass.length }} m</li>
 					<li>Crew: {{ shipclass.complement }}</li>
 					<li>of which Officers: {{ shipclass.officers }}</li>
-					<li>CO: OF-{{ shipclass.coof }}</li>
+					<li>CO: {{ shipclass.co }}</li>
+					<li>Construction cost: Ⴥ{{ shipclass.value }}</li>
 
 			</ul>
-			<input type="submit"/>  
+
+			<p><pre class="asciiart">
+
+{{ shipclass.asciiArt }}
+
+			</pre></p>
+
+			<p>
+				<input type="submit" value="Commission design"/> Design cost: Ⴥ{{ shipclass.value / 10 }}
+			</p>  
 		</form>
+
 	</div>
 </template>
 
