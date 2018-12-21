@@ -93,6 +93,41 @@
 		background: #322;
 	}
 
+	table, th, td {
+		border-style: solid;
+		border-collapse: collapse;
+		border-width: 1px;
+	}
+
+	.tooltipped {
+		position: relative;
+		display: inline-block;
+		border-width: 0px;
+		/* border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+	}
+
+	/* Tooltip text */
+	.tooltipped .tooltip {
+		visibility: hidden;
+		width: 120px;
+		background-color: black;
+		color: #fff;
+		text-align: center;
+		padding: 5px 0;
+		border-radius: 6px;
+		
+		position: absolute; /* Position the tooltip text - see examples below! */
+		z-index: 1;
+	}
+
+	/* Show the tooltip text when you mouse over the tooltip container */
+	.tooltipped:hover .tooltip {
+		visibility: visible;
+		width: 120px;
+		top: -5px;
+		left: 105%; 
+	}
+
 	input
 	{
 		font-family: "Rajdhani", Calibri, sens-serif;

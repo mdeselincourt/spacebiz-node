@@ -8,18 +8,43 @@
 				<input id="classrole" v-model="shipclass.role" value=""/>		
 			</p>
 	
-			<p>
-				<ul>
-					<li v-for="(d, dname) in shipclass.divisions" v-bind:key="dname"><!-- for each division make a point -->
-						<!-- using the :attr="datum" Vue syntax here -->
+			<table>
+				<tr>
+					<th>Tonnage</th><th>Manufacturer</th><th class="tooltipped">Reliability<span class="tooltip">1 means 'normal' not 'perfect'</span></th><th>Cost</th>
+				</tr>
+				
+				<tr v-for="(d, dname) in shipclass.divisions" v-bind:key="dname">
+					<td>
 						<input :id="dname" v-model.number="d.tonnage" v-on:input="shipclass.reevaluaterole()" TYPE="NUMBER" MIN="50" MAX="20000" STEP="50" SIZE="20"/><!-- tonnage input-->
 						t {{ dname }} <!-- tonnage input suffix --> 
+					</td>
+					<td>
 						<select :v-model="d.brandname"><!-- selector for brandname -->
-							<option v-for="brand in facts.brands" v-bind:key="brand" v-bind:value="brand">{{ brand }}</option> <!-- list all the facts.brands as options -->
+							<option v-for="(branddata, brand) in facts.brands" v-bind:key="brand" v-bind:value="brand">{{ brand }} (LINT TRICK : {{branddata.reliability}}) </option> <!-- list all the facts.brands as options -->
 						</select>
-					</li>
-				</ul>
-			</p>
+					</td>
+					<td>
+						{{ d.reliability }}
+					</td>
+					<td>
+						Ⴥ{{ d.value }}
+					</td>
+					<!-- for each division make a point -->
+<!--				<li v-for="(d, dname) in shipclass.divisions" v-bind:key="dname"> -->
+						<!-- using the :attr="datum" Vue syntax here -->
+						<!-- tonnage input-->
+<!--						<input :id="dname" v-model.number="d.tonnage" v-on:input="shipclass.reevaluaterole()" TYPE="NUMBER" MIN="50" MAX="20000" STEP="50" SIZE="20"/> -->
+						<!-- tonnage input suffix -->
+<!--					t {{ dname }}  -->
+						<!-- selector for brandname -->
+<!--					<select :v-model="d.brandname"> -->
+							<!-- list all the facts.brands as options -->
+<!--						<option v-for="brand in facts.brands" v-bind:key="brand" v-bind:value="brand">{{ brand }}</option> -->
+<!--					</select> -->
+<!--				</li>-->
+				</tr>
+				
+			</table>
 
 			
 			<!-- As of writing I don't know a better way to update a model element that is ALSO reactive. (shipclass) is necessary to reference the instance for some reason -->
@@ -103,7 +128,14 @@
 			return { 
 				shipclass: new ShipClass(),
 				facts: {
-					brands: ["AMEC", "Primarch", "YORK", "Majeure", "Knowles Boyce"]
+					brands: {
+						// Performance, Reliability, Cost
+						"AMEC": {performance: 1, reliability: 1, value: 1}, 
+						"Primarch": {performance: 0.8,reliability: 0.8,value: 0.64},
+						"YORK": {performance: 1.2,reliability: 0.8,value: 1},
+						"Majeure": {performance: 1.2,reliability: 0,value: 1.2},
+						"Knowles Boyce": {performance: 1.2,reliability: 1.2,value: 1.44}
+					}
 				}
 			};
 			
