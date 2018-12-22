@@ -1,6 +1,6 @@
 <template>
     <div id="spacebizuserbar">
-       <p>You are: {{ username }}</p>
+       <p>You are: {{ username }}. You have Ⴥ{{ balance }}</p>
     </div>
 </template>
 
@@ -9,7 +9,8 @@
     export default {
         data: function() {
             return {
-                username: 'Brapp Zannigan'
+                username: 'Brapp Zannigan',
+                balance: 9000
             }
         }
     }

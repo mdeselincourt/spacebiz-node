@@ -15,7 +15,7 @@
 //}
 
 // A module that is a class containing ES6 static functions
-export default class Spacebiz {
+//export default class Spacebiz {
 
     // Here's an example constructor
     // constructor(name, fierce){
@@ -27,6 +27,19 @@ export default class Spacebiz {
     //static calculateShipRole() {
     //    return "Maybe a Frigate?";
     //}
+
+//}
+
+export const SpacebizConsts = {
+    gametext: {
+        tooltips: {
+            manufacturers: `AMEC: industry standard parts.
+                Primarch: Cheap products for cost-saving.
+                YORK: powerful but unreliable. `,
+            reliability: `A relative factor, where industry standard is (1.0). 
+Perfect reliability cannot be achieved.`
+        }
+    } 
 }
 
 export class Division {

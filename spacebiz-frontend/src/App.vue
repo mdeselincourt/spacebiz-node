@@ -93,11 +93,15 @@
 		background: #322;
 	}
 
-	table, th, td {
+	table {
+		table-layout: fixed;
 		border-style: solid;
 		border-collapse: collapse;
 		border-width: 1px;
 	}
+
+	/* th, td {} */
+
 
 	.tooltipped {
 		position: relative;

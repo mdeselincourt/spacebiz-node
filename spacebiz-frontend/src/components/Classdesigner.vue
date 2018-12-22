@@ -10,7 +10,11 @@
 	
 			<table>
 				<tr>
-					<th>Tonnage</th><th>Manufacturer</th><th class="tooltipped">Reliability<span class="tooltip">1 means 'normal' not 'perfect'</span></th><th>Cost</th>
+					<!-- <th>Tonnage</th><th class="tooltipped">Manufacturer<span class="tooltip">{{ spacebizconsts.gametext.tooltips.manufacturers }}</span></th><th class="tooltipped">Reliability<span class="tooltip">1 means 'normal' not 'perfect'</span></th><th>Cost</th> -->
+					<th>Tonnage</th>
+					<th><span class="tooltipped">Manufacturer<span class="tooltip">{{ spacebizconsts.gametext.tooltips.manufacturers }}</span></span></th>
+					<th><span class="tooltipped">Reliability<span class="tooltip">{{ spacebizconsts.gametext.tooltips.reliability }}</span></span></th>
+					<th>Build cost</th>
 				</tr>
 				
 				<tr v-for="(d, dname) in shipclass.divisions" v-bind:key="dname">
@@ -20,7 +24,7 @@
 					</td>
 					<td>
 						<select :v-model="d.brandname"><!-- selector for brandname -->
-							<option v-for="(branddata, brand) in facts.brands" v-bind:key="brand" v-bind:value="brand">{{ brand }} (LINT TRICK : {{branddata.reliability}}) </option> <!-- list all the facts.brands as options -->
+							<option v-for="(branddata, brand) in facts.brands" v-bind:key="brand" v-bind:value="brand">{{ brand }} </option> <!-- list all the facts.brands as options -->
 						</select>
 					</td>
 					<td>
@@ -117,8 +121,7 @@
 	// import axios from 'axios'; // For HTTP!
 	// import json from 'json'; // For strinfigying for debugging/logging
 	
-	//     { Spacebiz, 
-	import { ShipClass } from '../../../spacebiz-backend/logic/Spacebiz.js'; // HERE'S HOW I COULD IMPORT A MODULE
+	import { SpacebizConsts, ShipClass } from '../../../spacebiz-backend/logic/Spacebiz.js'; // HERE'S HOW I COULD IMPORT A MODULE
 
 	// Configure this SFC
 	export default {
@@ -126,6 +129,7 @@
 		data () { 
 
 			return { 
+				spacebizconsts: SpacebizConsts,
 				shipclass: new ShipClass(),
 				facts: {
 					brands: {
