@@ -42,13 +42,34 @@ Perfect reliability cannot be achieved.`
     } 
 }
 
-export class Division {
-    constructor (tonnage,brandname,reliability,value) {
-        this.tonnage = tonnage,
-        this.brandname = brandname,
-        this.reliability = reliability,
-        this.value = value
+export class Mod {
+
+    constructor (name, performancePc, reliabilityPc, pricinessPc) {
+        this.name = name;
+        this.performancePc = performancePc;
+        this.reliabilityPc = reliabilityPc;
+        this.pricinessPc = pricinessPc;
     }
+
+}
+
+export class Division {
+    constructor (tonnage) {
+        this.tonnage = tonnage,
+
+        // Let's attempt a convention where mods[0] is ALWAYS manufacturer (and mods[1] is always shipyard)?
+        this.mods = [
+            new Mod("AMEC static debug", 101,102,103),
+            new Mod("Kuat Drive Yards static debug",104,105,106)
+        ]
+    }
+
+    get brandname() { return this.mods[0].name; }
+    get performancePc() { var r = 100; this.mods.forEach((e) => {r = r * (e.performancePc / 100)}); return Math.round(r); }
+    get reliabilityPc() { var r = 100; this.mods.forEach((e) => {r = r * (e.reliabilityPc / 100)}); return Math.round(r); }
+    get pricinessPc() { var r = 100; this.mods.forEach((e) => {r = r * (e.pricinessPc / 100)}); return Math.round(r); }
+    get value() { return Math.round(this.tonnage * this.pricinessPc / 100) }
+
 }
 
 export class ShipClass {
@@ -59,7 +80,7 @@ export class ShipClass {
         // 
         
 
-        var constructorDivisionTypes = ["engines", "e-warfare", "sensors", "weaponry"];
+        var constructorDivisionTypes = ["e-warfare", "engines", "sensors", "weaponry"];
 
         this.divisions = {}
 
@@ -105,6 +126,10 @@ export class ShipClass {
             x += this.divisions[divisionKey].value;
         }
         return x;
+    }
+
+    get designValue() {
+        return Math.round(this.value / 10);
     }
 
     get tonnage() {

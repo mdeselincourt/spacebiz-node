@@ -9,7 +9,10 @@
   "author": "MdS",
   "license": "UNLICENSED",
   "dependencies": {
-    "express": "^4.16.4",
-    "serverless-http": "^1.8.0"
+    "serverless-http": "^1.8.0",
+    "uuid": "^3.3.2"
+  },
+  "devDependencies": {
+    "aws-sdk": "^2.382.0"
   }
 }
