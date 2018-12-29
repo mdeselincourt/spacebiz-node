@@ -6,8 +6,9 @@
       <input v-model="email" type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
       <label for="inputPassword" class="sr-only">Password</label>
       <input v-model="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-      <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+      <button class="btn btn-lg btn-primary btn-block" type="submit" >Sign in</button>
     </form>
+    Error: {{ error }}
   </div>
 </template>
 
@@ -17,18 +18,31 @@ export default {
   data () {
     return {
       email: '',
-      password: ''
+      password: '',
+      error: 'n/a'
     }
   },
   methods: {
     login () {
-      console.log(this.email)
-      console.log(this.password)
+      // Called by @submit.prevent="login" in the template's login form
+      // For $http see https://github.com/pagekit/vue-resource/blob/develop/docs/http.md
+      //
+      // This is Pawel J Wal's code for calling his home-brewed Rails auth endpoint
+      // this.$http.post('/auth', { user: this.email, password: this.password })
+      //   .then(request => this.loginSuccessful(request))
+      //   .catch(request => this.loginFailed(request)) // I added request for debugging
+      //
+      // https://docs.aws.amazon.com/cognito/latest/developerguide/using-amazon-cognito-user-identity-pools-javascript-examples.html
+    },
+    loginSuccessful (req) {
+      this.error = 'success: ' + req.data.token
+    },
+    loginFailed (req) {
+      this.error = 'failed'
     }
   }
 }
 </script>
-
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 /*
